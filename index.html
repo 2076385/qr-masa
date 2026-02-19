@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Masa Bilgi</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; background:#f6f7f9; }
+    .wrap { max-width: 820px; margin: 0 auto; padding: 18px; }
+    .card { background:#fff; border-radius:16px; padding:18px; box-shadow: 0 6px 20px rgba(0,0,0,.06); }
+    h1 { font-size: 22px; margin: 0 0 10px; }
+    .row { display:flex; gap:10px; flex-wrap:wrap; margin: 10px 0 14px; }
+    button { border:0; padding:10px 12px; border-radius:12px; cursor:pointer; background:#e9edf3; }
+    button.primary { background:#111827; color:#fff; }
+    .pill { font-size:12px; opacity:.75; }
+    .audio { display:flex; gap:10px; flex-wrap:wrap; margin: 10px 0 14px; }
+    audio { width: 100%; max-width: 420px; }
+    .muted { opacity:.7; font-size: 13px; }
+    .divider { height:1px; background:#eef0f4; margin: 14px 0; }
+    .features li { margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="pill" id="badge">QR Masa Rehberi</div>
+      <h1 id="title">Yükleniyor...</h1>
+
+      <div class="row">
+        <button id="btnTR" class="primary">Türkçe</button>
+        <button id="btnEN">English</button>
+      </div>
+
+      <div class="muted" id="audioHint">Ses seçenekleri:</div>
+      <div class="audio" id="audioBox"></div>
+
+      <div class="divider"></div>
+
+      <div class="muted" id="textLabel">Metin:</div>
+      <div id="text" style="white-space:pre-wrap; line-height:1.55;"></div>
+
+      <div class="divider"></div>
+
+      <div class="muted">Öne çıkan özellikler:</div>
+      <ul class="features">
+        <li>ANC gürültü engelleyici kulaklık entegrasyonu</li>
+        <li>Ayarlanabilir loş aydınlatma</li>
+        <li>Telefon “park” çekmecesi</li>
+      </ul>
+    </div>
+  </div>
+
+<script>
+  // 1) BURAYA Google Sheet’ten yayınladığın CSV linkini koyacağız (bir sonraki adımda alacağız)
+  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQQNMd5s7lBsSfrwtEWbCm9eF7RoUdpvMUldjfDt434bovczTy-wcid-Hw9FF7O3Vyz-p9at4Cha9T6/pubhtml?gid=0&single=true";
+
+  // 2) URL parametresi: ?id=masa-1
+  const params = new URLSearchParams(location.search);
+  const ITEM_ID = params.get("id") || "masa-1";
+
+  // Dil varsayılanı: tarayıcı diline göre
+  const browserLang = (navigator.language || "tr").toLowerCase();
+  let lang = browserLang.startsWith("tr") ? "tr" : "en";
+
+  const btnTR = document.getElementById("btnTR");
+  const btnEN = document.getElementById("btnEN");
+  const titleEl = document.getElementById("title");
+  const textEl  = document.getElementById("text");
+  const audioBox = document.getElementById("audioBox");
+
+  function setButtons() {
+    btnTR.className = lang === "tr" ? "primary" : "";
+    btnEN.className = lang === "en" ? "primary" : "";
+  }
+
+  function parseCSV(text) {
+    // Basit CSV parser (tırnaklı alanları destekler)
+    const rows = [];
+    let cur = "", inQ = false, row = [];
+    for (let i=0;i<text.length;i++){
+      const c = text[i], n = text[i+1];
+      if (c === '"' && inQ && n === '"') { cur += '"'; i++; continue; }
+      if (c === '"') { inQ = !inQ; continue; }
+      if (c === ',' && !inQ) { row.push(cur); cur=""; continue; }
+      if ((c === '\n' || c === '\r') && !inQ) {
+        if (cur.length || row.length) { row.push(cur); rows.push(row); }
+        cur=""; row=[];
+        continue;
+      }
+      cur += c;
+    }
+    if (cur.length || row.length) { row.push(cur); rows.push(row); }
+    const header = rows[0].map(h => h.trim());
+    return rows.slice(1).filter(r => r.length>1).map(r => {
+      const obj = {};
+      header.forEach((h,idx) => obj[h] = (r[idx] ?? "").trim());
+      return obj;
+    });
+  }
+
+  function render(item) {
+    setButtons();
+    titleEl.textContent = (lang === "tr") ? item.title_tr : item.title_en;
+    textEl.textContent  = (lang === "tr") ? item.text_tr  : item.text_en;
+
+    audioBox.innerHTML = "";
+    const audios = (lang === "tr")
+      ? [
+          {label:"Kadın sesi", url:item.audio_tr_female},
+          {label:"Erkek sesi", url:item.audio_tr_male}
+        ]
+      : [
+          {label:"Female voice", url:item.audio_en_female},
+          {label:"Male voice", url:item.audio_en_male}
+        ];
+
+    audios.forEach(a => {
+      const wrap = document.createElement("div");
+      wrap.style.minWidth = "260px";
+      const lab = document.createElement("div");
+      lab.className = "muted";
+      lab.textContent = a.label;
+
+      if (a.url) {
+        const audio = document.createElement("audio");
+        audio.controls = true;
+        audio.src = a.url;
+        wrap.appendChild(lab);
+        wrap.appendChild(audio);
+      } else {
+        const p = document.createElement("div");
+        p.className = "muted";
+        p.textContent = "Ses dosyası eklenecek.";
+        wrap.appendChild(lab);
+        wrap.appendChild(p);
+      }
+      audioBox.appendChild(wrap);
+    });
+  }
+
+  async function main(){
+    if (SHEET_CSV_URL.includes("https://docs.google.com/spreadsheets/d/e/2PACX-1vQQNMd5s7lBsSfrwtEWbCm9eF7RoUdpvMUldjfDt434bovczTy-wcid-Hw9FF7O3Vyz-p9at4Cha9T6/pubhtml?gid=0&single=true")) {
+      titleEl.textContent = "Sheet linki eklenmedi";
+      textEl.textContent = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQQNMd5s7lBsSfrwtEWbCm9eF7RoUdpvMUldjfDt434bovczTy-wcid-Hw9FF7O3Vyz-p9at4Cha9T6/pubhtml?gid=0&single=true";
+      return;
+    }
+    const res = await fetch(SHEET_CSV_URL, {cache:"no-store"});
+    const csv = await res.text();
+    const data = parseCSV(csv);
+    const item = data.find(x => x.id === ITEM_ID) || data[0];
+    if (!item) {
+      titleEl.textContent = "Kayıt bulunamadı";
+      return;
+    }
+    render(item);
+
+    btnTR.onclick = () => { lang="tr"; render(item); };
+    btnEN.onclick = () => { lang="en"; render(item); };
+  }
+  main();
+</script>
+</body>
+</html>
