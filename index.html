@@ -155,24 +155,31 @@
       const sources = [localPath, ...driveCandidates(driveFileId)];
       let index = 0;
       let loaded = false;
+      let timeoutId;
 
       statusEl.textContent = "Ses yukleniyor...";
 
       const tryNext = () => {
+        clearTimeout(timeoutId);
         if (index >= sources.length) {
-          statusEl.textContent = "Ses acilamadi. En saglikli cozum: dosyayi repo icine assets klasorune yukleyin.";
+          statusEl.textContent = "Ses acilamadi. Dosya codec uyumsuz olabilir. MP3 veya M4A (AAC) kullanin.";
           return;
         }
         audioEl.src = sources[index++];
         audioEl.load();
+        timeoutId = setTimeout(() => {
+          if (!loaded) tryNext();
+        }, 8000);
       };
 
       audioEl.addEventListener("loadedmetadata", () => {
         loaded = true;
+        clearTimeout(timeoutId);
         statusEl.textContent = "";
       });
 
       audioEl.addEventListener("error", () => {
+        clearTimeout(timeoutId);
         if (!loaded) tryNext();
       });
 
