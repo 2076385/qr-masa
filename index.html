@@ -124,12 +124,12 @@
       <div class="audio-grid">
         <div class="audio-item">
           <strong>Ses 1</strong>
-          <audio controls preload="none" id="audio1"></audio>
+          <audio controls preload="metadata" id="audio1"></audio>
           <div class="meta" id="audio1Status"></div>
         </div>
         <div class="audio-item">
           <strong>Ses 2</strong>
-          <audio controls preload="none" id="audio2"></audio>
+          <audio controls preload="metadata" id="audio2"></audio>
           <div class="meta" id="audio2Status"></div>
         </div>
       </div>
@@ -164,6 +164,16 @@
 
       statusEl.textContent = "Ses yukleniyor...";
 
+      const markLoaded = () => {
+        if (loaded) return;
+        // HAVE_CURRENT_DATA ve uzeri durumlarda oynatma baslatilabilir.
+        if (audioEl.readyState >= 2 || Number.isFinite(audioEl.duration)) {
+          loaded = true;
+          clearTimeout(timeoutId);
+          statusEl.textContent = "";
+        }
+      };
+
       const tryNext = () => {
         clearTimeout(timeoutId);
         if (index >= sources.length) {
@@ -174,14 +184,13 @@
         audioEl.load();
         timeoutId = setTimeout(() => {
           if (!loaded) tryNext();
-        }, 8000);
+        }, 30000);
       };
 
-      audioEl.addEventListener("loadedmetadata", () => {
-        loaded = true;
-        clearTimeout(timeoutId);
-        statusEl.textContent = "";
-      });
+      audioEl.addEventListener("loadedmetadata", markLoaded);
+      audioEl.addEventListener("loadeddata", markLoaded);
+      audioEl.addEventListener("canplay", markLoaded);
+      audioEl.addEventListener("durationchange", markLoaded);
 
       audioEl.addEventListener("error", () => {
         clearTimeout(timeoutId);
