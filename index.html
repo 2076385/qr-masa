@@ -144,6 +144,11 @@
   </main>
 
   <script>
+    const PROD_BASE = "https://2076385.github.io/qr-masa/";
+    const runtimeBase = location.protocol === "file:"
+      ? ""
+      : (location.hostname.endsWith("github.io") ? PROD_BASE : new URL("./", location.href).href);
+
     // Google Drive dosyalari farkli endpoint'lerde farkli davranabildigi icin fallback listesi kullanilir.
     const driveCandidates = (fileId) => [
       `https://drive.google.com/uc?export=download&id=${fileId}`,
@@ -190,8 +195,8 @@
       "ornek-bolge": {
         title: "Bulundugunuz Bolge",
         description: "Bu bolgede tarihi ve kulturel noktalar, yeme-icme alanlari ve gezilecek yerler hakkinda sesli tanitim bulunur.",
-        audio1Local: "assets/ses1.mp3",
-        audio2Local: "assets/ses2.mp3",
+        audio1Local: `${runtimeBase}assets/ses1.mp3`,
+        audio2Local: `${runtimeBase}assets/ses2.mp3`,
         audio1Drive: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
         audio2Drive: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
       }
