@@ -137,6 +137,9 @@
       <p class="meta">
         QR kodunuzda sayfayi <code>?bolge=ornek-bolge</code> parametresi ile cagirabilirsiniz.
       </p>
+      <p class="meta">
+        En stabil calisma icin ses dosyalarini repoya <code>assets/ses1.mp3</code> ve <code>assets/ses2.mp3</code> olarak ekleyin.
+      </p>
     </section>
   </main>
 
@@ -148,8 +151,8 @@
       `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`
     ];
 
-    function bindDriveAudio(audioEl, statusEl, fileId) {
-      const sources = driveCandidates(fileId);
+    function bindAudio(audioEl, statusEl, localPath, driveFileId) {
+      const sources = [localPath, ...driveCandidates(driveFileId)];
       let index = 0;
       let loaded = false;
 
@@ -157,7 +160,7 @@
 
       const tryNext = () => {
         if (index >= sources.length) {
-          statusEl.textContent = "Ses acilamadi. Dosya paylasimini 'linke sahip herkes' yapin.";
+          statusEl.textContent = "Ses acilamadi. En saglikli cozum: dosyayi repo icine assets klasorune yukleyin.";
           return;
         }
         audioEl.src = sources[index++];
@@ -180,8 +183,10 @@
       "ornek-bolge": {
         title: "Bulundugunuz Bolge",
         description: "Bu bolgede tarihi ve kulturel noktalar, yeme-icme alanlari ve gezilecek yerler hakkinda sesli tanitim bulunur.",
-        audio1: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
-        audio2: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
+        audio1Local: "assets/ses1.mp3",
+        audio2Local: "assets/ses2.mp3",
+        audio1Drive: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
+        audio2Drive: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
       }
     };
 
@@ -191,15 +196,17 @@
 
     document.getElementById("title").textContent = data.title;
     document.getElementById("description").textContent = data.description;
-    bindDriveAudio(
+    bindAudio(
       document.getElementById("audio1"),
       document.getElementById("audio1Status"),
-      data.audio1
+      data.audio1Local,
+      data.audio1Drive
     );
-    bindDriveAudio(
+    bindAudio(
       document.getElementById("audio2"),
       document.getElementById("audio2Status"),
-      data.audio2
+      data.audio2Local,
+      data.audio2Drive
     );
   </script>
 </body>
