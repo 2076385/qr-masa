@@ -125,10 +125,12 @@
         <div class="audio-item">
           <strong>Ses 1</strong>
           <audio controls preload="none" id="audio1"></audio>
+          <div class="meta" id="audio1Status"></div>
         </div>
         <div class="audio-item">
           <strong>Ses 2</strong>
           <audio controls preload="none" id="audio2"></audio>
+          <div class="meta" id="audio2Status"></div>
         </div>
       </div>
 
@@ -139,15 +141,47 @@
   </main>
 
   <script>
-    // Google Drive paylasim linklerini audio etiketinde calisabilecek dogrudan URL'ye cevirir.
-    const driveToDirect = (fileId) => `https://drive.google.com/uc?export=download&id=${fileId}`;
+    // Google Drive dosyalari farkli endpoint'lerde farkli davranabildigi icin fallback listesi kullanilir.
+    const driveCandidates = (fileId) => [
+      `https://drive.google.com/uc?export=download&id=${fileId}`,
+      `https://drive.google.com/uc?export=view&id=${fileId}`,
+      `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`
+    ];
+
+    function bindDriveAudio(audioEl, statusEl, fileId) {
+      const sources = driveCandidates(fileId);
+      let index = 0;
+      let loaded = false;
+
+      statusEl.textContent = "Ses yukleniyor...";
+
+      const tryNext = () => {
+        if (index >= sources.length) {
+          statusEl.textContent = "Ses acilamadi. Dosya paylasimini 'linke sahip herkes' yapin.";
+          return;
+        }
+        audioEl.src = sources[index++];
+        audioEl.load();
+      };
+
+      audioEl.addEventListener("loadedmetadata", () => {
+        loaded = true;
+        statusEl.textContent = "";
+      });
+
+      audioEl.addEventListener("error", () => {
+        if (!loaded) tryNext();
+      });
+
+      tryNext();
+    }
 
     const REGIONS = {
       "ornek-bolge": {
         title: "Bulundugunuz Bolge",
         description: "Bu bolgede tarihi ve kulturel noktalar, yeme-icme alanlari ve gezilecek yerler hakkinda sesli tanitim bulunur.",
-        audio1: driveToDirect("1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf"),
-        audio2: driveToDirect("1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_")
+        audio1: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
+        audio2: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
       }
     };
 
@@ -157,8 +191,16 @@
 
     document.getElementById("title").textContent = data.title;
     document.getElementById("description").textContent = data.description;
-    document.getElementById("audio1").src = data.audio1;
-    document.getElementById("audio2").src = data.audio2;
+    bindDriveAudio(
+      document.getElementById("audio1"),
+      document.getElementById("audio1Status"),
+      data.audio1
+    );
+    bindDriveAudio(
+      document.getElementById("audio2"),
+      document.getElementById("audio2Status"),
+      data.audio2
+    );
   </script>
 </body>
 </html>
