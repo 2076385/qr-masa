@@ -109,6 +109,55 @@
       padding: 1px 6px;
       color: var(--accent);
     }
+
+    .lang-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .btn.active {
+      background: #e9f0ff;
+      border-color: #c7d8ff;
+      color: #0f3e92;
+    }
+
+    .preview {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fbfcfe;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .edit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 190px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      font: inherit;
+      line-height: 1.5;
+      resize: vertical;
+    }
   </style>
 </head>
 <body>
@@ -140,6 +189,32 @@
       <p class="meta">
         En stabil calisma icin ses dosyalarini repoya <code>assets/ses1.mp3</code> ve <code>assets/ses2.mp3</code> olarak ekleyin.
       </p>
+
+      <div class="divider"></div>
+
+      <h2 class="section-title">Metin Alani (TR / EN)</h2>
+      <div class="lang-row">
+        <button type="button" class="btn active" id="btnTR">Turkce</button>
+        <button type="button" class="btn" id="btnEN">English</button>
+      </div>
+      <div id="textPreview" class="preview"></div>
+
+      <div class="edit-grid">
+        <div>
+          <strong>Turkce Metin</strong>
+          <textarea id="textTR">Tema: Doga ve Teknolojinin Kesisim Noktasi
+
+[0:00 - 0:45] Giris ve Amac
+"Merhaba, su an Turkiye'nin dogal miraslarini koruyan ve gelecege tasiyan stratejik bir noktadasiniz.</textarea>
+        </div>
+        <div>
+          <strong>English Text</strong>
+          <textarea id="textEN">Theme: Where Nature Meets Innovation
+
+[0:00 - 0:45] Intro & Purpose
+"Hello! You are currently standing at a strategic point where Turkey's natural heritage is preserved and carried into the future.</textarea>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -214,6 +289,20 @@
     const params = new URLSearchParams(window.location.search);
     const key = (params.get("bolge") || "ornek-bolge").toLowerCase();
     const data = REGIONS[key] || REGIONS["ornek-bolge"];
+    let currentLang = "tr";
+
+    const btnTR = document.getElementById("btnTR");
+    const btnEN = document.getElementById("btnEN");
+    const textTR = document.getElementById("textTR");
+    const textEN = document.getElementById("textEN");
+    const textPreview = document.getElementById("textPreview");
+
+    function renderText() {
+      const value = currentLang === "tr" ? textTR.value : textEN.value;
+      textPreview.textContent = value;
+      btnTR.classList.toggle("active", currentLang === "tr");
+      btnEN.classList.toggle("active", currentLang === "en");
+    }
 
     document.getElementById("title").textContent = data.title;
     document.getElementById("description").textContent = data.description;
@@ -229,6 +318,18 @@
       data.audio2Local,
       data.audio2Drive
     );
+
+    btnTR.addEventListener("click", () => {
+      currentLang = "tr";
+      renderText();
+    });
+    btnEN.addEventListener("click", () => {
+      currentLang = "en";
+      renderText();
+    });
+    textTR.addEventListener("input", renderText);
+    textEN.addEventListener("input", renderText);
+    renderText();
   </script>
 </body>
 </html>
