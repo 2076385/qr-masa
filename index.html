@@ -4,26 +4,33 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>QR Bolge Tanitim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f3f5f8;
+      --bg: #f0f4ea;
       --card: #ffffff;
-      --text: #182029;
-      --muted: #5f6f82;
-      --line: #e8edf3;
-      --accent: #1048a8;
+      --text: #162326;
+      --muted: #52636a;
+      --line: #dbe5df;
+      --accent: #007258;
+      --accent-2: #0c5f9a;
+      --soft: #f6fbf8;
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
+      font-family: "Manrope", "Segoe UI", Arial, sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at 20% 0%, #ffffff 0%, var(--bg) 50%);
+      background:
+        radial-gradient(circle at 8% 0%, #ffffff 0%, #f8fbf9 38%, transparent 70%),
+        linear-gradient(180deg, #eff6f0 0%, #e9f2ee 100%);
     }
 
     .wrap {
-      max-width: 860px;
+      max-width: 980px;
       margin: 0 auto;
       padding: 24px 16px 40px;
     }
@@ -31,24 +38,25 @@
     .card {
       background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 22px;
       padding: 20px;
-      box-shadow: 0 10px 28px rgba(16, 35, 68, 0.08);
+      box-shadow: 0 14px 40px rgba(13, 42, 33, 0.1);
     }
 
     .tag {
       display: inline-block;
       font-size: 12px;
-      color: var(--muted);
-      padding: 6px 10px;
-      border: 1px solid var(--line);
+      color: #0f6a5a;
+      padding: 7px 12px;
+      border: 1px solid #c4dfd7;
       border-radius: 999px;
       margin-bottom: 10px;
+      background: #eef9f4;
     }
 
     h1 {
       margin: 0 0 8px;
-      font-size: clamp(24px, 4.2vw, 34px);
+      font-size: clamp(24px, 4.4vw, 36px);
       line-height: 1.2;
     }
 
@@ -61,21 +69,96 @@
     .divider {
       height: 1px;
       background: var(--line);
-      margin: 16px 0;
+      margin: 20px 0;
     }
 
     .section-title {
       margin: 0 0 10px;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
+    }
+
+    .hero {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #dfeee7;
+      min-height: 260px;
+      margin-bottom: 16px;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-info {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      background: rgba(9, 35, 32, 0.62);
+      color: #f5fffc;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .map-frame {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #eef6f1;
+    }
+
+    iframe {
+      width: 100%;
+      min-height: 320px;
+      border: 0;
+      display: block;
+    }
+
+    .waterflow {
+      margin-top: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--soft);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .waterflow strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #154a74;
+    }
+
+    .video-shell {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 9;
     }
 
     .audio-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 10px;
     }
 
@@ -83,7 +166,7 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       padding: 10px;
-      background: #fbfcfe;
+      background: var(--soft);
     }
 
     .audio-item strong {
@@ -104,14 +187,42 @@
     }
 
     .meta code {
-      background: #eef3ff;
+      background: #ecf7f2;
       border-radius: 6px;
       padding: 1px 6px;
-      color: var(--accent);
+      color: #006b51;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .gallery figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f7fcfa;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery figcaption {
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--muted);
     }
 
     .lang-row {
       display: flex;
+      flex-wrap: wrap;
       gap: 8px;
       margin-bottom: 10px;
     }
@@ -127,16 +238,16 @@
     }
 
     .btn.active {
-      background: #e9f0ff;
-      border-color: #c7d8ff;
-      color: #0f3e92;
+      background: #e8f9f3;
+      border-color: #b8e0d2;
+      color: #04573f;
     }
 
     .preview {
       border: 1px solid var(--line);
       border-radius: 12px;
       padding: 12px;
-      background: #fbfcfe;
+      background: var(--soft);
       white-space: pre-wrap;
       line-height: 1.6;
       margin-bottom: 12px;
@@ -158,6 +269,18 @@
       line-height: 1.5;
       resize: vertical;
     }
+
+    @media (max-width: 640px) {
+      .hero img {
+        height: 220px;
+      }
+      iframe {
+        min-height: 250px;
+      }
+      .gallery img {
+        height: 120px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -167,17 +290,81 @@
       <h1 id="title">Yukleniyor...</h1>
       <p id="description" class="sub"></p>
 
+      <div class="hero">
+        <img id="heroImage" src="assets/images/selale-kapak.jpg" alt="Selale ve dogal havuz gorunumu" />
+        <div class="hero-info" id="heroCaption">
+          Dogal havuz, kayalik vadiden gelen kaynak suyu ile beslenir.
+        </div>
+      </div>
+
       <div class="divider"></div>
 
-      <h2 class="section-title">Sesli Anlatim</h2>
+      <h2 class="section-title">Akan Su Sistemi Haritasi</h2>
+      <div class="map-frame">
+        <iframe
+          id="waterMap"
+          title="Dere ve cay baglanti haritasi"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=34.741%2C40.769%2C34.764%2C40.783&layer=mapnik&marker=40.776%2C34.752">
+        </iframe>
+      </div>
+      <div class="waterflow" id="waterflowText">
+        <strong>Su Baglanti Rotasi</strong>
+        Kaynak noktasi -> yerel dere -> ana cay hatti -> bolgesel nehir sistemine baglanti.
+      </div>
+
+      <div class="divider"></div>
+
+      <h2 class="section-title">45-90 sn Mikro Belgesel</h2>
+      <div class="video-shell">
+        <video id="docVideo" controls preload="metadata" poster="assets/images/selale-kapak.jpg">
+          <source id="docVideoSource" src="assets/video/mikro-belgesel.mp4" type="video/mp4" />
+          Tarayiciniz video oynatmayi desteklemiyor.
+        </video>
+      </div>
+      <p class="meta" id="videoInfo">
+        Onerilen sure: 45-90 saniye. Dosya: <code>assets/video/mikro-belgesel.mp4</code>
+      </p>
+
+      <div class="divider"></div>
+
+      <h2 class="section-title">Fotograf Galerisi</h2>
+      <div class="gallery" id="galleryGrid">
+        <figure>
+          <img src="assets/images/galeri-1.jpg" alt="Dogal havuz genel gorunum" />
+          <figcaption>Galeri 1</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/images/galeri-2.jpg" alt="Selale yakin cekim" />
+          <figcaption>Galeri 2</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/images/galeri-3.jpg" alt="Vadi ve su akis hatti" />
+          <figcaption>Galeri 3</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/images/galeri-4.jpg" alt="Kayaliklar ve havuz kiyisi" />
+          <figcaption>Galeri 4</figcaption>
+        </figure>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2 class="section-title">Coklu Dil Sesli Anlatim</h2>
+      <div class="lang-row">
+        <button type="button" class="btn active" id="voiceTR">TR</button>
+        <button type="button" class="btn" id="voiceEN">EN</button>
+        <button type="button" class="btn" id="voiceDE">DE</button>
+      </div>
       <div class="audio-grid">
         <div class="audio-item">
-          <strong>Ses 1</strong>
+          <strong id="audioTrack1Label">Ana Anlatim</strong>
           <audio controls preload="metadata" id="audio1"></audio>
           <div class="meta" id="audio1Status"></div>
         </div>
         <div class="audio-item">
-          <strong>Ses 2</strong>
+          <strong id="audioTrack2Label">Detay Anlatim</strong>
           <audio controls preload="metadata" id="audio2"></audio>
           <div class="meta" id="audio2Status"></div>
         </div>
@@ -187,7 +374,10 @@
         QR kodunuzda sayfayi <code>?bolge=ornek-bolge</code> parametresi ile cagirabilirsiniz.
       </p>
       <p class="meta">
-        En stabil calisma icin ses dosyalarini repoya <code>assets/ses1.mp3</code> ve <code>assets/ses2.mp3</code> olarak ekleyin.
+        En stabil calisma icin dil bazli dosyalari repoya
+        <code>assets/audio/tr-1.mp3</code>, <code>assets/audio/tr-2.mp3</code>,
+        <code>assets/audio/en-1.mp3</code>, <code>assets/audio/en-2.mp3</code> olarak ekleyin.
+        Yoksa sistem mevcut <code>assets/ses1.mp3</code> ve <code>assets/ses2.mp3</code> ile devam eder.
       </p>
 
       <div class="divider"></div>
@@ -231,7 +421,34 @@
       `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`
     ];
 
+    const placeholderImage = (label) =>
+      `data:image/svg+xml;utf8,${encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'>
+          <defs>
+            <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+              <stop offset='0%' stop-color='#d9eee6'/>
+              <stop offset='100%' stop-color='#e9f3fb'/>
+            </linearGradient>
+          </defs>
+          <rect width='1200' height='700' fill='url(#g)'/>
+          <circle cx='170' cy='120' r='55' fill='#f8fff6'/>
+          <path d='M0 560L220 430L400 520L690 350L980 520L1200 430V700H0Z' fill='#b9d6cc'/>
+          <text x='600' y='350' font-family='Arial, sans-serif' font-size='40' text-anchor='middle' fill='#2e5e57'>${label}</text>
+        </svg>`
+      )}`;
+
+    function attachImageFallback(imgEl, label) {
+      imgEl.addEventListener("error", () => {
+        if (!imgEl.dataset.fallbackApplied) {
+          imgEl.dataset.fallbackApplied = "1";
+          imgEl.src = placeholderImage(label);
+        }
+      });
+    }
+
     function bindAudio(audioEl, statusEl, localPath, driveFileId) {
+      if (audioEl._cleanupAudioBind) audioEl._cleanupAudioBind();
+
       const sources = [localPath, ...driveCandidates(driveFileId)];
       let index = 0;
       let loaded = false;
@@ -267,22 +484,67 @@
       audioEl.addEventListener("canplay", markLoaded);
       audioEl.addEventListener("durationchange", markLoaded);
 
-      audioEl.addEventListener("error", () => {
+      const onError = () => {
         clearTimeout(timeoutId);
         if (!loaded) tryNext();
-      });
+      };
+      audioEl.addEventListener("error", onError);
+
+      audioEl._cleanupAudioBind = () => {
+        clearTimeout(timeoutId);
+        audioEl.removeEventListener("loadedmetadata", markLoaded);
+        audioEl.removeEventListener("loadeddata", markLoaded);
+        audioEl.removeEventListener("canplay", markLoaded);
+        audioEl.removeEventListener("durationchange", markLoaded);
+        audioEl.removeEventListener("error", onError);
+      };
 
       tryNext();
     }
 
     const REGIONS = {
       "ornek-bolge": {
-        title: "Bulundugunuz Bolge",
-        description: "Bu bolgede tarihi ve kulturel noktalar, yeme-icme alanlari ve gezilecek yerler hakkinda sesli tanitim bulunur.",
-        audio1Local: `${runtimeBase}assets/ses1.mp3`,
-        audio2Local: `${runtimeBase}assets/ses2.mp3`,
-        audio1Drive: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
-        audio2Drive: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
+        title: "Ilıca Şelalesi Deneyim Noktasi",
+        description: "Kaynak suyun dere-cay baglantisini, 45-90 saniyelik mikro-belgeseli ve coklu dilde sesli anlatimi buradan izleyebilirsiniz.",
+        heroImage: `${runtimeBase}assets/images/selale-kapak.jpg`,
+        heroCaption: "Vadi icindeki kaynak suyu, asagidaki yerel dereyi besleyerek ana cay sistemine baglanir.",
+        mapEmbed: "https://www.openstreetmap.org/export/embed.html?bbox=34.741%2C40.769%2C34.764%2C40.783&layer=mapnik&marker=40.776%2C34.752",
+        waterflowText: "Kaynak Noktasi -> Selale Havuzu -> Yerel Dere -> Ana Cay -> Bolgesel Nehir Sistemi",
+        videoSrc: `${runtimeBase}assets/ses1.mp4`,
+        videoPoster: `${runtimeBase}assets/images/selale-kapak.jpg`,
+        videoInfo: "Onerilen sure: 45-90 saniye. Simdilik mevcut ornek video bagli, sonra mikro-belgesel dosyanizi degistirin.",
+        gallery: [
+          { src: `${runtimeBase}assets/images/galeri-1.jpg`, caption: "Selale giris noktasi" },
+          { src: `${runtimeBase}assets/images/galeri-2.jpg`, caption: "Dogal havuz kesiti" },
+          { src: `${runtimeBase}assets/images/galeri-3.jpg`, caption: "Vadi ici akis hatti" },
+          { src: `${runtimeBase}assets/images/galeri-4.jpg`, caption: "Kayalik ve orman dokusu" }
+        ],
+        voiceByLang: {
+          tr: {
+            label1: "Ana Anlatim (TR)",
+            label2: "Detay Anlatim (TR)",
+            audio1Local: `${runtimeBase}assets/ses1.mp3`,
+            audio2Local: `${runtimeBase}assets/ses2.mp3`,
+            audio1Drive: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
+            audio2Drive: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
+          },
+          en: {
+            label1: "Main Narration (EN)",
+            label2: "Detailed Narration (EN)",
+            audio1Local: `${runtimeBase}assets/ses1.mp3`,
+            audio2Local: `${runtimeBase}assets/ses2.mp3`,
+            audio1Drive: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
+            audio2Drive: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
+          },
+          de: {
+            label1: "Haupterklarung (DE)",
+            label2: "Detailerklarung (DE)",
+            audio1Local: `${runtimeBase}assets/ses1.mp3`,
+            audio2Local: `${runtimeBase}assets/ses2.mp3`,
+            audio1Drive: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
+            audio2Drive: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
+          }
+        }
       }
     };
 
@@ -290,12 +552,60 @@
     const key = (params.get("bolge") || "ornek-bolge").toLowerCase();
     const data = REGIONS[key] || REGIONS["ornek-bolge"];
     let currentLang = "tr";
+    let voiceLang = "tr";
 
     const btnTR = document.getElementById("btnTR");
     const btnEN = document.getElementById("btnEN");
+    const voiceTR = document.getElementById("voiceTR");
+    const voiceEN = document.getElementById("voiceEN");
+    const voiceDE = document.getElementById("voiceDE");
     const textTR = document.getElementById("textTR");
     const textEN = document.getElementById("textEN");
     const textPreview = document.getElementById("textPreview");
+    const audioTrack1Label = document.getElementById("audioTrack1Label");
+    const audioTrack2Label = document.getElementById("audioTrack2Label");
+
+    function renderVoiceButtons() {
+      voiceTR.classList.toggle("active", voiceLang === "tr");
+      voiceEN.classList.toggle("active", voiceLang === "en");
+      voiceDE.classList.toggle("active", voiceLang === "de");
+    }
+
+    function renderAudioByLanguage() {
+      const pack = data.voiceByLang[voiceLang] || data.voiceByLang.tr;
+      audioTrack1Label.textContent = pack.label1;
+      audioTrack2Label.textContent = pack.label2;
+      bindAudio(
+        document.getElementById("audio1"),
+        document.getElementById("audio1Status"),
+        pack.audio1Local,
+        pack.audio1Drive
+      );
+      bindAudio(
+        document.getElementById("audio2"),
+        document.getElementById("audio2Status"),
+        pack.audio2Local,
+        pack.audio2Drive
+      );
+      renderVoiceButtons();
+    }
+
+    function renderGallery() {
+      const galleryGrid = document.getElementById("galleryGrid");
+      galleryGrid.innerHTML = "";
+      (data.gallery || []).forEach((item, idx) => {
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        const cap = document.createElement("figcaption");
+        img.src = item.src;
+        img.alt = item.caption || `Galeri gorseli ${idx + 1}`;
+        attachImageFallback(img, item.caption || `Galeri ${idx + 1}`);
+        cap.textContent = item.caption || `Galeri ${idx + 1}`;
+        figure.appendChild(img);
+        figure.appendChild(cap);
+        galleryGrid.appendChild(figure);
+      });
+    }
 
     function renderText() {
       const value = currentLang === "tr" ? textTR.value : textEN.value;
@@ -306,18 +616,17 @@
 
     document.getElementById("title").textContent = data.title;
     document.getElementById("description").textContent = data.description;
-    bindAudio(
-      document.getElementById("audio1"),
-      document.getElementById("audio1Status"),
-      data.audio1Local,
-      data.audio1Drive
-    );
-    bindAudio(
-      document.getElementById("audio2"),
-      document.getElementById("audio2Status"),
-      data.audio2Local,
-      data.audio2Drive
-    );
+    document.getElementById("heroImage").src = data.heroImage;
+    attachImageFallback(document.getElementById("heroImage"), "Kapak Fotografi");
+    document.getElementById("heroCaption").textContent = data.heroCaption;
+    document.getElementById("waterMap").src = data.mapEmbed;
+    document.getElementById("waterflowText").innerHTML = `<strong>Su Baglanti Rotasi</strong>${data.waterflowText}`;
+    document.getElementById("docVideo").poster = data.videoPoster;
+    document.getElementById("docVideoSource").src = data.videoSrc;
+    document.getElementById("docVideo").load();
+    document.getElementById("videoInfo").innerHTML = `${data.videoInfo} Dosya: <code>assets/ses1.mp4</code> veya <code>assets/video/mikro-belgesel.mp4</code>`;
+    renderGallery();
+    renderAudioByLanguage();
 
     btnTR.addEventListener("click", () => {
       currentLang = "tr";
@@ -326,6 +635,18 @@
     btnEN.addEventListener("click", () => {
       currentLang = "en";
       renderText();
+    });
+    voiceTR.addEventListener("click", () => {
+      voiceLang = "tr";
+      renderAudioByLanguage();
+    });
+    voiceEN.addEventListener("click", () => {
+      voiceLang = "en";
+      renderAudioByLanguage();
+    });
+    voiceDE.addEventListener("click", () => {
+      voiceLang = "de";
+      renderAudioByLanguage();
     });
     textTR.addEventListener("input", renderText);
     textEN.addEventListener("input", renderText);
