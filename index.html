@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>QR Bolge Tanitim</title>
+  <title>QR Bölge Tanıtım - Küre Dağları</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet" />
@@ -160,21 +160,22 @@
 
     .audio-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: 1fr;
       gap: 10px;
     }
 
     .audio-item {
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 10px;
+      padding: 15px;
       background: var(--soft);
     }
 
     .audio-item strong {
       display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--accent);
     }
 
     audio {
@@ -188,13 +189,6 @@
       line-height: 1.5;
     }
 
-    .meta code {
-      background: #ecf7f2;
-      border-radius: 6px;
-      padding: 1px 6px;
-      color: #006b51;
-    }
-
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -206,14 +200,12 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       overflow: hidden;
-      background: #f7fcfa;
     }
 
     .gallery img {
       width: 100%;
       height: 140px;
-      object-fit: contain;
-      background: #eef5f1;
+      object-fit: cover;
       display: block;
     }
 
@@ -249,112 +241,48 @@
     .preview {
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 12px;
+      padding: 15px;
       background: var(--soft);
       white-space: pre-wrap;
-      line-height: 1.6;
+      line-height: 1.7;
       margin-bottom: 12px;
-    }
-
-    .edit-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 10px;
+      font-size: 15px;
     }
 
     textarea {
       width: 100%;
-      min-height: 190px;
+      min-height: 250px;
       border: 1px solid var(--line);
       border-radius: 10px;
       padding: 10px;
       font: inherit;
-      line-height: 1.5;
-      resize: vertical;
-    }
-
-    @media (max-width: 640px) {
-      .hero img {
-        height: 220px;
-      }
-      iframe {
-        min-height: 250px;
-      }
-      .gallery img {
-        height: 120px;
-      }
+      display: none; /* Düzenleme alanını varsayılan olarak gizledik */
     }
   </style>
 </head>
 <body>
   <main class="wrap">
     <section class="card">
-      <span class="tag">QR Rehber</span>
-      <h1 id="title">Yukleniyor...</h1>
+      <span class="tag">🌿 Milli Park Rehberi</span>
+      <h1 id="title">Yükleniyor...</h1>
       <p id="description" class="sub"></p>
 
       <div class="hero">
-        <img id="heroImage" src="assets/images/selale-kapak.jpg" alt="Selale ve dogal havuz gorunumu" />
-        <div class="hero-info" id="heroCaption">
-          Dogal havuz, kayalik vadiden gelen kaynak suyu ile beslenir.
-        </div>
+        <img id="heroImage" src="assets/images/selale-kapak.jpg" alt="Küre Dağları Kapak" />
+        <div class="hero-info" id="heroCaption"></div>
       </div>
 
       <div class="divider"></div>
 
-      <h2 class="section-title">Akan Su Sistemi Haritasi</h2>
+      <h2 class="section-title">Konum ve Su Sistemi</h2>
       <div class="map-frame">
-        <iframe
-          id="waterMap"
-          title="Dere ve cay baglanti haritasi"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=34.741%2C40.769%2C34.764%2C40.783&layer=mapnik&marker=40.776%2C34.752">
-        </iframe>
+        <iframe id="waterMap" title="Harita" loading="lazy" src=""></iframe>
       </div>
-      <div class="waterflow" id="waterflowText">
-        <strong>Su Baglanti Rotasi</strong>
-        Kaynak noktasi -> yerel dere -> ana cay hatti -> bolgesel nehir sistemine baglanti.
-      </div>
+      <div class="waterflow" id="waterflowText"></div>
 
       <div class="divider"></div>
 
-      <h2 class="section-title">45-90 sn Mikro Belgesel</h2>
-      <div class="video-shell">
-        <video id="docVideo" controls preload="metadata" poster="assets/images/selale-kapak.jpg">
-          <source id="docVideoSource" src="assets/video/mikro-belgesel.mp4" type="video/mp4" />
-          Tarayiciniz video oynatmayi desteklemiyor.
-        </video>
-      </div>
-      <p class="meta" id="videoInfo">
-        Onerilen sure: 45-90 saniye. Dosya: <code>assets/video/mikro-belgesel.mp4</code>
-      </p>
-
-      <div class="divider"></div>
-
-      <h2 class="section-title">Fotograf Galerisi</h2>
-      <div class="gallery" id="galleryGrid">
-        <figure>
-          <img src="assets/images/galeri-1.jpg" alt="Dogal havuz genel gorunum" />
-          <figcaption>Galeri 1</figcaption>
-        </figure>
-        <figure>
-          <img src="assets/images/galeri-2.jpg" alt="Selale yakin cekim" />
-          <figcaption>Galeri 2</figcaption>
-        </figure>
-        <figure>
-          <img src="assets/images/galeri-3.jpg" alt="Vadi ve su akis hatti" />
-          <figcaption>Galeri 3</figcaption>
-        </figure>
-        <figure>
-          <img src="assets/images/galeri-4.jpg" alt="Kayaliklar ve havuz kiyisi" />
-          <figcaption>Galeri 4</figcaption>
-        </figure>
-      </div>
-
-      <div class="divider"></div>
-
-      <h2 class="section-title">Coklu Dil Sesli Anlatim</h2>
+      <h2 class="section-title">Sesli Rehber</h2>
       <div class="lang-row">
         <button type="button" class="btn active" id="voiceTR">TR</button>
         <button type="button" class="btn" id="voiceEN">EN</button>
@@ -362,40 +290,34 @@
       </div>
       <div class="audio-grid">
         <div class="audio-item">
-          <strong id="audioTrack1Label">Ana Anlatim</strong>
+          <strong id="audioTrack1Label">Sesli Anlatım</strong>
           <audio controls preload="metadata" id="audio1"></audio>
           <div class="meta" id="audio1Status"></div>
         </div>
-        <div class="audio-item">
-          <strong id="audioTrack2Label">Detay Anlatim</strong>
-          <audio controls preload="metadata" id="audio2"></audio>
-          <div class="meta" id="audio2Status"></div>
-        </div>
       </div>
-
-      <p class="meta">
-        QR kodunuzda sayfayi <code>?bolge=ornek-bolge</code> parametresi ile cagirabilirsiniz.
-      </p>
-      <p class="meta">
-        En stabil calisma icin dil bazli dosyalari repoya
-        <code>assets/audio/tr-1.mp3</code>, <code>assets/audio/tr-2.mp3</code>,
-        <code>assets/audio/en-1.mp3</code>, <code>assets/audio/en-2.mp3</code> olarak ekleyin.
-        Yoksa sistem mevcut <code>assets/ses1.mp3</code> ve <code>assets/ses2.mp3</code> ile devam eder.
-      </p>
 
       <div class="divider"></div>
 
-      <h2 class="section-title">Metin Alani (TR / EN)</h2>
+      <h2 class="section-title">Tanıtım Videosu</h2>
+      <div class="video-shell">
+        <iframe width="100%" height="360" src="https://www.youtube.com/watch?v=4EUIi1N4FLA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2 class="section-title">Fotoğraf Galerisi</h2>
+      <div class="gallery" id="galleryGrid"></div>
+
+      <div class="divider"></div>
+
+      <h2 class="section-title">Bölge Hakkında Bilgi</h2>
       <div class="lang-row">
-        <button type="button" class="btn active" id="btnTR">Turkce</button>
+        <button type="button" class="btn active" id="btnTR">Türkçe</button>
         <button type="button" class="btn" id="btnEN">English</button>
       </div>
       <div id="textPreview" class="preview"></div>
 
-      <div class="edit-grid">
-        <div>
-          <strong>Turkce Metin</strong>
-          <textarea id="textTR">Karadeniz’in Vahşi Cenneti: Küre Dağları Milli Parkı
+      <textarea id="textTR">Karadeniz’in Vahşi Cenneti: Küre Dağları Milli Parkı
 Neden Görmelisiniz?
 Küre Dağları, sıradan bir ormanlık alan değil; Avrupa'nın en seçkin koruma alanlarından (PAN Parks) biri ve bir "Platin Yabanıl Sertifikası" sahibidir. Burası, doğanın kendi kurallarını koyduğu gerçek bir vahşi yaşam sığınağıdır.
 
@@ -410,296 +332,117 @@ Kanyonun İçinde Yürüyüş: Pınarbaşı'nda kayalara ahşap bir nakış gibi
 
 Macera ve Kamp: Bartın Aşağıköy'de Zipline ile ormanın üzerinde uçabilir, Şenpazar Kızılcasu Kamp Alanı'nda çadırınızı veya karavanınızı kurup doğayla baş başa, yıldızların altında uyuyabilirsiniz.
 
-Tarih ve Kültür Keşfi: Ulus'taki doğa müzelerini (Tahnit ve Etnografya) gezebilir, dönüş yolunda rotanızı UNESCO mirasımız Safranbolu'ya veya Karadeniz'in incisi Amasra'ya çevirebilirsiniz.
-
 Bölgenin Sırrı ve Efsaneleri
-Küre Dağları, sadece doğal güzellikleriyle değil, taşıdığı binlerce yıllık sırlarla da büyüleyicidir.
+"Küre" İsmi Nereden Geliyor? Bu görkemli dağların ismi, bölgenin binlerce yıllık madencilik geçmişinden gelir. Kastamonu ve çevresi Antik Çağ'dan beri önemli bir bakır çıkarım merkezidir. "Küre", eski dilde madenleri eritmek için kullanılan devasa döküm fırınlarına verilen isimdir.
 
-"Küre" İsmi Nereden Geliyor? Bu görkemli dağların ismi, bölgenin binlerce yıllık madencilik geçmişinden gelir. Kastamonu ve çevresi Antik Çağ'dan beri önemli bir bakır çıkarım merkezidir. "Küre", eski dilde madenleri eritmek için kullanılan devasa döküm fırınlarına ve ocaklara verilen isimdir. Dağlar, bağrında yanan bu tarihi ateşten ismini almıştır.
-
-Ulukaya Şelalesi'nin Hüzünlü Aşk Efsanesi
-Milli Parkın Bartın sınırlarında yer alan Ulukaya Şelalesi'nin suları yöre halkına göre aslında bir aşığın gözyaşlarıdır. Efsaneye göre; antik çağlarda Selamnos adında bir genç, güzeller güzeli Hera'ya aşık olur ve evlenirler. Ancak Selamnos çaresiz bir hastalığa yakalanıp gün geçtikçe çirkinleşince Hera onu terk eder. Aşk acısına ve yalnızlığa dayanamayan Selamnos kendini Ulukaya'nın zirvesinden boşluğa bırakır. Aşk tanrısı Eros bu duruma çok üzülür ve gencin bedenini, o kayalardan sonsuza dek akacak bir şelaleye dönüştürür. Yöre halkı bugün bile, şelalenin suyundan içenlerin veya yüzünü yıkayanların içindeki aşk acısının dineceğine inanır.
-
-Ilgarini'nin Binlerce Yıllık Hayalet Köyü
-Dünyanın en büyük mağaralarından olan Ilgarini, sadece sarkıt ve dikitlerden oluşmaz. Zorlu bir orman yürüyüşüyle ulaşılan bu devasa mağaranın içinde Genç Antik ve Bizans döneminden kalma gizli kilise kalıntıları, su sarnıçları ve mezarlar bulunur. Eski çağlarda insanların işgalcilerden kaçıp yerin metrelerce altında, karanlıkta bütün bir ömür geçirdiği bu mağara, ziyaretçilerine adeta zaman tünelinde bir yolculuk yaptırır.</textarea>
-        </div>
-        <div>
-          <strong>English Text</strong>
-          <textarea id="textEN">The Wild Paradise of the Black Sea: Küre Mountains National Park
-Why You Should See It?
+Ulukaya Şelalesi'nin Hüzünlü Aşk Efsanesi: Efsaneye göre; antik çağlarda Selamnos adında bir genç, güzeller güzeli Hera'ya aşık olur ancak Hera onu terk eder. Aşk acısına dayanamayan Selamnos kendini Ulukaya'nın zirvesinden boşluğa bırakır. Aşk tanrısı Eros bu duruma çok üzülür ve gencin bedenini, o kayalardan sonsuza dek akacak bir şelaleye dönüştürür. Yöre halkı bugün bile, şelalenin suyundan içenlerin aşk acısının dineceğine inanır.</textarea>
+      <textarea id="textEN">The Wild Paradise of the Black Sea: Küre Mountains National Park
+Why You Should Visit?
 The Küre Mountains are not just an ordinary forested area; they are one of Europe's most distinguished protected areas (PAN Parks) and hold a "Platinum Wilderness Certificate." This is a true wildlife sanctuary where nature sets its own rules.
 
-Capital of Canyons: Valla Canyon, one of the world's most remarkable canyons with a depth exceeding one thousand meters, and the Çatak Canyon Glass Viewing Terrace, which gives you the feeling of floating in mid-air while walking above, offer breathtaking views unique to this place.
+Capital of Canyons: Valla Canyon, one of the world's most remarkable canyons with a depth exceeding one thousand meters, and the Çatak Canyon Glass Viewing Terrace offer breathtaking views unique to this place.
 
-World-Class Caves: It is an underground labyrinth with 77 discovered caves. Ilgarini Cave, in particular, the 4th largest cave in the world, is both a geographical and historical masterpiece.
+World-Class Caves: It is an underground labyrinth with 77 discovered caves. Ilgarini Cave, the 4th largest cave in the world, is both a geographical and historical masterpiece.
 
 What You Can Do?
-In the Küre Mountains, whether you want to push the limits of adrenaline or simply relax your soul by listening to the sound of the water:
+Walking in the Canyon: In Pınarbaşı, you can walk the 3-kilometer Horma Canyon Walking Trail and relieve your fatigue in the cool waters of the Ilıca Waterfall.
 
-Walking in the Canyon: In Pınarbaşı, you can walk the 3-kilometer Horma Canyon Walking Trail, carved into the rocks like a wooden embroidery, and relieve your fatigue in the cool waters of the Ilıca Waterfall at the end of the trail.
+Adventure and Camping: In Bartın Aşağıköy, you can fly over the forest with a zipline, or stay at the Şenpazar Kızılcasu Campsite.
 
-Adventure and Camping: In Bartın Aşağıköy, you can fly over the forest with a zipline, or set up your tent or caravan at the Şenpazar Kızılcasu Campsite and sleep under the stars, surrounded by nature.
+Secrets and Legends
+Where Does the Name "Küre" Come From? The name comes from the region's millennia-old mining history. "Küre" is the name given in ancient times to the gigantic casting furnaces used to melt metals.
 
-Historical and Cultural Discovery: You can visit the natural history museums (Taxidermy and Ethnography) in Ulus, and on your way back, you can turn your route towards Safranbolu, a UNESCO World Heritage site, or Amasra, the pearl of the Black Sea.
-
-The Region's Secrets and Legends
-The Küre Mountains are fascinating not only for their natural beauty but also for the thousands of years old secrets they hold.
-
-Where Does the Name "Küre" Come From? The name of these magnificent mountains comes from the region's millennia-old mining history. Kastamonu and its surroundings have been an important copper extraction center since antiquity. "Küre" is the name given in ancient times to the gigantic casting furnaces and kilns used to melt metals. The mountains take their name from this historical fire burning within them.
-
-The Sad Love Legend of Ulukaya Waterfall
-The waters of Ulukaya Waterfall, located on the Bartın border of the National Park, are, according to the local people, actually the tears of a lover. According to the legend, in ancient times, a young man named Selamnos fell in love with the beautiful Hera and they married. However, when Selamnos contracted an incurable disease and became uglier day by day, Hera abandoned him. Unable to bear the pain of love and loneliness, Selamnos threw himself from the summit of Ulukaya into the void. The god of love, Eros, was very saddened by this and transformed the young man's body into a waterfall that would flow from those rocks forever. Even today, the locals believe that drinking or washing one's face with the waterfall's water will soothe the pain of unrequited love.
-
-Ilgarini's Thousand-Year-Old Ghost Village
-Ilgarini, one of the world's largest caves, is not only composed of stalactites and stalagmites. Accessible via a challenging forest trek, this enormous cave contains hidden church ruins, water cisterns, and tombs dating from the Late Antiquity and Byzantine periods. In ancient times, people spent their entire lives meters underground in darkness, fleeing from invaders. This cave offers visitors a journey through time.</textarea>
-        </div>
-      </div>
+The Legend of Ulukaya Waterfall: According to the legend, a young man named Selamnos threw himself from the summit due to heartbreak. The god Eros transformed his body into a waterfall. It is believed that drinking this water heals the pain of love.</textarea>
     </section>
   </main>
 
   <script>
     const PROD_BASE = "https://2076385.github.io/qr-masa/";
-    const runtimeBase = location.protocol === "file:"
-      ? ""
-      : (location.hostname.endsWith("github.io") ? PROD_BASE : new URL("./", location.href).href);
-
-    // Google Drive dosyalari farkli endpoint'lerde farkli davranabildigi icin fallback listesi kullanilir.
-    const driveCandidates = (fileId) => [
-      `https://drive.google.com/uc?export=download&id=${fileId}`,
-      `https://drive.google.com/uc?export=view&id=${fileId}`,
-      `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`
-    ];
-
-    const placeholderImage = (label) =>
-      `data:image/svg+xml;utf8,${encodeURIComponent(
-        `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'>
-          <defs>
-            <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-              <stop offset='0%' stop-color='#d9eee6'/>
-              <stop offset='100%' stop-color='#e9f3fb'/>
-            </linearGradient>
-          </defs>
-          <rect width='1200' height='700' fill='url(#g)'/>
-          <circle cx='170' cy='120' r='55' fill='#f8fff6'/>
-          <path d='M0 560L220 430L400 520L690 350L980 520L1200 430V700H0Z' fill='#b9d6cc'/>
-          <text x='600' y='350' font-family='Arial, sans-serif' font-size='40' text-anchor='middle' fill='#2e5e57'>${label}</text>
-        </svg>`
-      )}`;
-
-    function attachImageFallback(imgEl, label) {
-      imgEl.addEventListener("error", () => {
-        if (!imgEl.dataset.fallbackApplied) {
-          imgEl.dataset.fallbackApplied = "1";
-          imgEl.src = placeholderImage(label);
-        }
-      });
-    }
-
-    function bindAudio(audioEl, statusEl, localPath, driveFileId) {
-      if (audioEl._cleanupAudioBind) audioEl._cleanupAudioBind();
-
-      const sources = [localPath, ...driveCandidates(driveFileId)];
-      let index = 0;
-      let loaded = false;
-      let timeoutId;
-
-      statusEl.textContent = "Ses yukleniyor...";
-
-      const markLoaded = () => {
-        if (loaded) return;
-        // HAVE_CURRENT_DATA ve uzeri durumlarda oynatma baslatilabilir.
-        if (audioEl.readyState >= 2 || Number.isFinite(audioEl.duration)) {
-          loaded = true;
-          clearTimeout(timeoutId);
-          statusEl.textContent = "";
-        }
-      };
-
-      const tryNext = () => {
-        clearTimeout(timeoutId);
-        if (index >= sources.length) {
-          statusEl.textContent = "Ses acilamadi. Dosya codec uyumsuz olabilir. MP3 veya M4A (AAC) kullanin.";
-          return;
-        }
-        audioEl.src = sources[index++];
-        audioEl.load();
-        timeoutId = setTimeout(() => {
-          if (!loaded) tryNext();
-        }, 30000);
-      };
-
-      audioEl.addEventListener("loadedmetadata", markLoaded);
-      audioEl.addEventListener("loadeddata", markLoaded);
-      audioEl.addEventListener("canplay", markLoaded);
-      audioEl.addEventListener("durationchange", markLoaded);
-
-      const onError = () => {
-        clearTimeout(timeoutId);
-        if (!loaded) tryNext();
-      };
-      audioEl.addEventListener("error", onError);
-
-      audioEl._cleanupAudioBind = () => {
-        clearTimeout(timeoutId);
-        audioEl.removeEventListener("loadedmetadata", markLoaded);
-        audioEl.removeEventListener("loadeddata", markLoaded);
-        audioEl.removeEventListener("canplay", markLoaded);
-        audioEl.removeEventListener("durationchange", markLoaded);
-        audioEl.removeEventListener("error", onError);
-      };
-
-      tryNext();
-    }
+    const runtimeBase = location.protocol === "file:" ? "" : (location.hostname.endsWith("github.io") ? PROD_BASE : "./");
 
     const REGIONS = {
-      "Küre Dağları Milli Parkı": {
-        title: "Ilıca Şelalesi Deneyim Noktasi",
-        description: "Kaynak suyun dere-cay baglantisini, 45-90 saniyelik mikro-belgeseli ve coklu dilde sesli anlatimi buradan izleyebilirsiniz.",
+      "kure-daglari": {
+        title: "Küre Dağları Milli Parkı",
+        description: "Avrupa'nın en vahşi ve korunmuş doğasına hoş geldiniz. Ilıca Şelalesi ve kanyonlar bölgesindesiniz.",
         heroImage: `${runtimeBase}assets/images/selale-kapak.jpg`,
-        heroCaption: "Ilıca Şelalesi.",
-        mapEmbed: "https://www.openstreetmap.org/export/embed.html?bbox=34.741%2C40.769%2C34.764%2C40.783&layer=mapnik&marker=40.776%2C34.752",
-        waterflowText: "Kaynak Noktasi -> Selale Havuzu -> Yerel Dere -> Ana Cay -> Bolgesel Nehir Sistemi",
-        videoSrc: `${runtimeBase}assets/ses1.mp4`,
-        videoPoster: `${runtimeBase}assets/images/selale-kapak.jpg`,
-        videoInfo: "Onerilen sure: 45-90 saniye. Simdilik mevcut ornek video bagli, sonra mikro-belgesel dosyanizi degistirin.",
+        heroCaption: "Ilıca Şelalesi - Pınarbaşı, Kastamonu",
+        mapEmbed: "https://www.openstreetmap.org/export/embed.html?bbox=32.95,41.55,33.15,41.75&layer=mapnik",
+        waterflowText: "Horma Kanyonu -> Ilıca Şelalesi -> Devrekani Çayı -> Karadeniz",
+        videoSrc: `${runtimeBase}assets/video/mikro-belgesel.mp4`,
         gallery: [
-          { src: `${runtimeBase}assets/images/galeri-1.jpg`, caption: "Selale giris noktasi" },
-          { src: `${runtimeBase}assets/images/galeri-2.jpg`, caption: "Dogal havuz kesiti" },
-          { src: `${runtimeBase}assets/images/galeri-3.jpg`, caption: "Vadi ici akis hatti" },
-          { src: `${runtimeBase}assets/images/galeri-4.jpg`, caption: "Kayalik ve orman dokusu" }
+          { src: `${runtimeBase}assets/images/galeri-1.jpg`, caption: "Horma Kanyonu" },
+          { src: `${runtimeBase}assets/images/galeri-2.jpg`, caption: "Valla Kanyonu" },
+          { src: `${runtimeBase}assets/images/galeri-3.jpg`, caption: "Ilıca Şelalesi" },
+          { src: `${runtimeBase}assets/images/galeri-4.jpg`, caption: "Mağara Oluşumları" }
         ],
         voiceByLang: {
-          tr: {
-            label1: "Ana Anlatim (TR)",
-            label2: "Detay Anlatim (TR)",
-            audio1Local: `${runtimeBase}assets/ses1.mp3`,
-            audio2Local: `${runtimeBase}assets/ses2.mp3`,
-            audio1Drive: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
-            audio2Drive: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
-          },
-          en: {
-            label1: "Main Narration (EN)",
-            label2: "Detailed Narration (EN)",
-            audio1Local: `${runtimeBase}assets/ses1.mp3`,
-            audio2Local: `${runtimeBase}assets/ses2.mp3`,
-            audio1Drive: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
-            audio2Drive: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
-          },
-          de: {
-            label1: "Haupterklarung (DE)",
-            label2: "Detailerklarung (DE)",
-            audio1Local: `${runtimeBase}assets/ses1.mp3`,
-            audio2Local: `${runtimeBase}assets/ses2.mp3`,
-            audio1Drive: "1CRu0NV2AcZqsx77FBg5IOwZ_OtX5LoIf",
-            audio2Drive: "1RL1U28sQbO0xB-Vp1wzrSiMN6hzv3Ly_"
-          }
+          tr: { label: "Sesli Anlatım (TR)", audio: `${runtimeBase}assets/ses1.mp3`},
+          en: { label: "Audio Guide (EN)", audio: `${runtimeBase}assets/ses2.mp3` },
+          de: { label: "Audio-Guide (DE)", audio: `${runtimeBase}assets/ses3.mp3` }
         }
       }
     };
 
     const params = new URLSearchParams(window.location.search);
-    const key = (params.get("bolge") || "Küre Dağları Milli Parkı").toLowerCase();
-    const data = REGIONS[key] || REGIONS["Küre Dağları Milli Parkı"];
+    const key = (params.get("bolge") || "kure-daglari").toLowerCase();
+    const data = REGIONS[key] || REGIONS["kure-daglari"];
     let currentLang = "tr";
     let voiceLang = "tr";
 
-    const btnTR = document.getElementById("btnTR");
-    const btnEN = document.getElementById("btnEN");
-    const voiceTR = document.getElementById("voiceTR");
-    const voiceEN = document.getElementById("voiceEN");
-    const voiceDE = document.getElementById("voiceDE");
-    const textTR = document.getElementById("textTR");
-    const textEN = document.getElementById("textEN");
-    const textPreview = document.getElementById("textPreview");
-    const audioTrack1Label = document.getElementById("audioTrack1Label");
-    const audioTrack2Label = document.getElementById("audioTrack2Label");
-
-    function renderVoiceButtons() {
-      voiceTR.classList.toggle("active", voiceLang === "tr");
-      voiceEN.classList.toggle("active", voiceLang === "en");
-      voiceDE.classList.toggle("active", voiceLang === "de");
+    function bindAudio(audioEl, statusEl, localPath, driveId) {
+      statusEl.textContent = "Yükleniyor...";
+      audioEl.src = localPath;
+      audioEl.onerror = () => {
+         statusEl.textContent = "Yerel dosya bulunamadı, bulut sistemi deneniyor...";
+         audioEl.src = `https://drive.google.com/uc?export=download&id=${driveId}`;
+      };
+      audioEl.oncanplay = () => statusEl.textContent = "";
     }
 
-    function renderAudioByLanguage() {
-      const pack = data.voiceByLang[voiceLang] || data.voiceByLang.tr;
-      audioTrack1Label.textContent = pack.label1;
-      audioTrack2Label.textContent = pack.label2;
-      bindAudio(
-        document.getElementById("audio1"),
-        document.getElementById("audio1Status"),
-        pack.audio1Local,
-        pack.audio1Drive
-      );
-      bindAudio(
-        document.getElementById("audio2"),
-        document.getElementById("audio2Status"),
-        pack.audio2Local,
-        pack.audio2Drive
-      );
-      renderVoiceButtons();
-    }
+    function renderPage() {
+      document.getElementById("title").textContent = data.title;
+      document.getElementById("description").textContent = data.description;
+      document.getElementById("heroImage").src = data.heroImage;
+      document.getElementById("heroCaption").textContent = data.heroCaption;
+      document.getElementById("waterMap").src = data.mapEmbed;
+      document.getElementById("waterflowText").innerHTML = `<strong>Su Akış Hattı:</strong> ${data.waterflowText}`;
 
-    function renderGallery() {
+      // Galeri
       const galleryGrid = document.getElementById("galleryGrid");
       galleryGrid.innerHTML = "";
-      (data.gallery || []).forEach((item, idx) => {
-        const figure = document.createElement("figure");
-        const img = document.createElement("img");
-        const cap = document.createElement("figcaption");
-        img.src = item.src;
-        img.alt = item.caption || `Galeri gorseli ${idx + 1}`;
-        attachImageFallback(img, item.caption || `Galeri ${idx + 1}`);
-        cap.textContent = item.caption || `Galeri ${idx + 1}`;
-        figure.appendChild(img);
-        figure.appendChild(cap);
-        galleryGrid.appendChild(figure);
+      data.gallery.forEach(item => {
+        galleryGrid.innerHTML += `<figure><img src="${item.src}"><figcaption>${item.caption}</figcaption></figure>`;
       });
+
+      renderText();
+      renderAudio();
     }
 
     function renderText() {
-      const value = currentLang === "tr" ? textTR.value : textEN.value;
-      textPreview.textContent = value;
-      btnTR.classList.toggle("active", currentLang === "tr");
-      btnEN.classList.toggle("active", currentLang === "en");
+      const val = currentLang === "tr" ? document.getElementById("textTR").value : document.getElementById("textEN").value;
+      document.getElementById("textPreview").textContent = val;
+      document.getElementById("btnTR").classList.toggle("active", currentLang === "tr");
+      document.getElementById("btnEN").classList.toggle("active", currentLang === "en");
     }
 
-    document.getElementById("title").textContent = data.title;
-    document.getElementById("description").textContent = data.description;
-    document.getElementById("heroImage").src = data.heroImage;
-    attachImageFallback(document.getElementById("heroImage"), "Kapak Fotografi");
-    document.getElementById("heroCaption").textContent = data.heroCaption;
-    document.getElementById("waterMap").src = data.mapEmbed;
-    document.getElementById("waterflowText").innerHTML = `<strong>Su Baglanti Rotasi</strong>${data.waterflowText}`;
-    document.getElementById("docVideo").poster = data.videoPoster;
-    document.getElementById("docVideoSource").src = data.videoSrc;
-    document.getElementById("docVideo").load();
-    document.getElementById("videoInfo").innerHTML = `${data.videoInfo} Dosya: <code>assets/ses1.mp4</code> veya <code>assets/video/mikro-belgesel.mp4</code>`;
-    renderGallery();
-    renderAudioByLanguage();
+    function renderAudio() {
+      const pack = data.voiceByLang[voiceLang] || data.voiceByLang.tr;
+      document.getElementById("audioTrack1Label").textContent = pack.label;
+      bindAudio(document.getElementById("audio1"), document.getElementById("audio1Status"), pack.audio, pack.drive);
+      
+      document.getElementById("voiceTR").classList.toggle("active", voiceLang === "tr");
+      document.getElementById("voiceEN").classList.toggle("active", voiceLang === "en");
+      document.getElementById("voiceDE").classList.toggle("active", voiceLang === "de");
+    }
 
-    btnTR.addEventListener("click", () => {
-      currentLang = "tr";
-      renderText();
-    });
-    btnEN.addEventListener("click", () => {
-      currentLang = "en";
-      renderText();
-    });
-    voiceTR.addEventListener("click", () => {
-      voiceLang = "tr";
-      renderAudioByLanguage();
-    });
-    voiceEN.addEventListener("click", () => {
-      voiceLang = "en";
-      renderAudioByLanguage();
-    });
-    voiceDE.addEventListener("click", () => {
-      voiceLang = "de";
-      renderAudioByLanguage();
-    });
-    textTR.addEventListener("input", renderText);
-    textEN.addEventListener("input", renderText);
-    renderText();
+    // Event Listeners
+    document.getElementById("btnTR").onclick = () => { currentLang = "tr"; renderText(); };
+    document.getElementById("btnEN").onclick = () => { currentLang = "en"; renderText(); };
+    document.getElementById("voiceTR").onclick = () => { voiceLang = "tr"; renderAudio(); };
+    document.getElementById("voiceEN").onclick = () => { voiceLang = "en"; renderAudio(); };
+    document.getElementById("voiceDE").onclick = () => { voiceLang = "de"; renderAudio(); };
+
+    renderPage();
   </script>
 </body>
 </html>
